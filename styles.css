@@ -1,0 +1,102 @@
+/* ============================
+   기본 텍스트 스타일
+============================ */
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+/* ============================
+   공통 컨테이너
+============================ */
+.container {
+  background-color: #eee;
+  width: 15%;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* 좌우 위치 지정 */
+#left-container {
+  left: 0;
+}
+
+#right-container {
+  right: 0;
+}
+
+/* ============================
+   식물 관련 스타일
+============================ */
+.plant-holder {
+  position: relative;
+  height: 13%;
+  left: -10px;
+}
+
+.plant {
+  position: absolute;
+  max-width: 150%;
+  max-height: 150%;
+  z-index: 2;
+}
+
+/* ============================
+   테라리움(병) 본체
+============================ */
+.can-walls {
+  height: 80%;
+  width: 60%;
+  background: #d1e1df;
+  border-radius: 1rem;
+  position: absolute;
+  bottom: 0.5%;
+  left: 20%;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.can-top {
+  width: 50%;
+  height: 5%;
+  background: #d1e1df;
+  position: absolute;
+  bottom: 80.5%;
+  left: 25%;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.can-bottom {
+  width: 50%;
+  height: 1%;
+  background: #d1e1df;
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  opacity: 0.7;
+}
+
+/* ============================
+   흙 영역
+============================ */
+.dirt {
+  width: 60%;
+  height: 5%;
+  background: #3a241d;
+  position: absolute;
+  border-radius: 0 0 1rem 1rem;
+  bottom: 1%;
+  left: 20%;
+  opacity: 0.7;
+  z-index: 0; /* -1 대신 0으로 변경 */
+}
