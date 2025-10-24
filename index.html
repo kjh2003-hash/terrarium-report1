@@ -1,0 +1,120 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to my Virtual Terrarium</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: helvetica, arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      position: absolute;
+      width: 15%;
+      height: 100%;
+      padding: 10px;
+      background-color: #eee;
+    }
+    #left-container { left: 0; top: 0; }
+    #right-container { right: 0; top: 0; }
+    .plant {
+      position: absolute;
+      max-width: 150%;
+      max-height: 150%;
+      cursor: grab;
+    }
+    .can-walls, .can-top, .can-bottom, .dirt {
+      position: absolute;
+      background: #d1e1df;
+    }
+    .can-walls { width: 60%; height: 80%; bottom: 0.5%; left: 20%; opacity: 0.5; border-radius: 1rem; }
+    .can-top { width: 50%; height: 5%; bottom: 80.5%; left: 25%; opacity: 0.7; }
+    .can-bottom { width: 50%; height: 1%; bottom: 0%; left: 25%; opacity: 0.7; }
+    .dirt { width: 60%; height: 5%; bottom: 1%; left: 20%; border-radius: 0 0 1rem 1rem; background: #3a241d; opacity: 0.7; z-index: -1;}
+  </style>
+</head>
+<body>
+  <h1>My Terrarium</h1>
+
+  <div id="terrarium">
+    <div id="page">
+      <!-- 왼쪽 컨테이너 -->
+      <div id="left-container" class="container">
+        <div class="plant-holder">
+          <img class="plant" alt="plant 1" id="plant1" src="./images/plant1.png" draggable="true" />
+        </div>
+        <div class="plant-holder">
+          <img class="plant" alt="plant 7" id="plant7" src="./images/plant7.png" draggable="true" />
+        </div>
+      </div>
+
+      <!-- 오른쪽 컨테이너 -->
+      <div id="right-container" class="container">
+        <div class="plant-holder">
+          <img class="plant" alt="plant 8" id="plant8" src="./images/plant8.png" draggable="true" />
+        </div>
+        <div class="plant-holder">
+          <img class="plant" alt="plant 14" id="plant14" src="./images/plant14.png" draggable="true" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 테라리움 구조 -->
+    <div class="can-top"></div>
+    <div class="can-walls" id="drop-area"></div>
+    <div class="dirt"></div>
+    <div class="can-bottom"></div>
+  </div>
+
+  <script>
+    // 최상위 z-index 관리
+    let topZIndex = 2;
+    const dropArea = document.getElementById('drop-area');
+
+    // 모든 식물에 대해 드래그 이벤트 추가
+    const plants = document.querySelectorAll('.plant');
+    plants.forEach(plant => {
+      // 드래그 시작 시 데이터 저장
+      plant.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', plant.id);
+        topZIndex++;
+        plant.style.zIndex = topZIndex;
+      });
+
+      // 더블 클릭 시 맨 위로
+      plant.addEventListener('dblclick', () => {
+        topZIndex++;
+        plant.style.zIndex = topZIndex;
+      });
+    });
+
+    // 드롭 영역 설정
+    dropArea.addEventListener('dragover', e => {
+      e.preventDefault(); // 기본 동작 방지
+    });
+
+    dropArea.addEventListener('drop', e => {
+      e.preventDefault();
+      const plantId = e.dataTransfer.getData('text/plain');
+      const plant = document.getElementById(plantId);
+
+      // 마우스 위치 기준으로 이미지 이동
+      const rect = dropArea.getBoundingClientRect();
+      const x = e.clientX - rect.left - plant.width / 2;
+      const y = e.clientY - rect.top - plant.height / 2;
+
+      plant.style.position = 'absolute';
+      plant.style.left = x + 'px';
+      plant.style.top = y + 'px';
+
+      // dropArea에 붙여서 테라리움 내부로 이동
+      dropArea.appendChild(plant);
+    });
+  </script>
+</body>
+</html>
